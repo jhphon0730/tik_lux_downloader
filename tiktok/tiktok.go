@@ -74,3 +74,7 @@ func Download(videoList []string, downloadWg *sync.WaitGroup) {
 		}(video)
 	}
 }
+
+// Parameters: Base Profile URL / Get ALL Video URLS ( Query LIMIT )
+// TODO: Create a function to get all video urls from a profile
+// TODO: func GetAllUserVideos(url string) ( []string, error )

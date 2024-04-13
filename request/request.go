@@ -18,6 +18,7 @@ var FakeHeaders = map[string]string{
 	"User-Agent":      "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0",
 }
 
+// Get Response/Cookie
 func Request(method, url string, headers map[string]string) (*http.Response, map[string]string, error) {
 	// Create New Request [HTTP]
 	transport := &http.Transport{
@@ -64,11 +65,13 @@ func Request(method, url string, headers map[string]string) (*http.Response, map
 	return res, cookies, err
 }
 
+// Get HTML DOC
 func Get(url, refer string, headers map[string]string) (string, map[string]string, error) {
 	body, res_headers, err := GetByte(url, refer, headers)
 	return string(body), res_headers, err
 }
 
+// Get Byte Data * Video Data & Image Data
 func GetByte(url, refer string, headers map[string]string) ([]byte, map[string]string, error) {
 	if headers == nil {
 		headers = map[string]string{}
@@ -100,6 +103,9 @@ func GetByte(url, refer string, headers map[string]string) ([]byte, map[string]s
 	return body, res_headers, nil
 }
 
+// Get Headers Data
+// * Content-Type
+// * Content-Length
 func Headers(url, refer string) (http.Header, map[string]string, error) {
 	headers := map[string]string{
 		"Referer": refer,

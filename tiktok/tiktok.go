@@ -60,6 +60,8 @@ func Download(videoList []string, downloadWg *sync.WaitGroup) {
 				log.Fatalln("Failed to get video url")
 			}
 
+			log.Println("Downloading video: ", video_title)
+
 			video_bytes, err := GetVideoByteData(video_url, cookies)
 			if err != nil {
 				log.Fatalln(err.Error())

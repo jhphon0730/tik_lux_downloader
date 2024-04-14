@@ -15,5 +15,5 @@ func DownloadVideo() {
 }
 
 func main() {
-
+	DownloadVideo()
 }

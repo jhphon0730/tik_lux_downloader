@@ -15,7 +15,7 @@ func GetVideoURL(url string) (string, string, map[string]string) {
 		log.Fatalln(err.Error())
 	}
 
-	urlMatcherRegExp := regexp.MustCompile(`"downloadAddr":\s*"([^"]+)"`)
+	urlMatcherRegExp := regexp.MustCompile(`"playAddr":\s*"([^"]+)"`)
 	matchDownloadAddr := urlMatcherRegExp.FindStringSubmatch(html)
 
 	if len(matchDownloadAddr) == 0 {

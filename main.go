@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"sync"
 	"tik_downloader/tiktok"
 )
@@ -16,8 +15,5 @@ func DownloadVideo() {
 }
 
 func main() {
-	_, _, err := tiktok.GetOriginUserURL("https://www.tiktok.com/@p7apan")
-	if err != nil {
-		log.Fatalln(err.Error())
-	}
+
 }

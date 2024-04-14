@@ -1,13 +1,32 @@
 package tiktok
 
 import (
+	"errors"
+	"fmt"
 	"log"
-	"regexp"
 	"strings"
 	"sync"
+	regexp "tik_downloader/regexp"
 	"tik_downloader/request"
 	"tik_downloader/utils"
 )
+
+func GetOriginUserURL(url string) (string, map[string]string, error) {
+	html, video_url_headers, err := request.Get(url, url, nil)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+
+	secUidMatcherRegExp := regexp.USERSSECID
+	secUidMatcher := secUidMatcherRegExp.FindStringSubmatch(html)
+	if len(secUidMatcher) == 0 {
+		return "", nil, errors.New("failed to get secUid")
+	}
+
+	fmt.Println(secUidMatcher[1])
+
+	return html, video_url_headers, nil
+}
 
 func GetVideoURL(url string) (string, string, map[string]string) {
 	html, video_url_headers, err := request.Get(url, url, nil)
@@ -15,7 +34,7 @@ func GetVideoURL(url string) (string, string, map[string]string) {
 		log.Fatalln(err.Error())
 	}
 
-	urlMatcherRegExp := regexp.MustCompile(`"playAddr":\s*"([^"]+)"`)
+	urlMatcherRegExp := regexp.VIDEOURL
 	matchDownloadAddr := urlMatcherRegExp.FindStringSubmatch(html)
 
 	if len(matchDownloadAddr) == 0 {
@@ -24,7 +43,7 @@ func GetVideoURL(url string) (string, string, map[string]string) {
 
 	videoURL := strings.ReplaceAll(matchDownloadAddr[1], `\u002F`, "/")
 
-	titleMatcherRegExp := regexp.MustCompile(`"desc":"([^"]+)"`)
+	titleMatcherRegExp := regexp.VIDEOTITLE
 	titleMatcher := titleMatcherRegExp.FindStringSubmatch(html)
 	if len(titleMatcher) == 0 {
 		return "", "", nil
